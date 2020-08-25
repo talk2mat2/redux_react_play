@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import {connect} from 'react-redux'
+import {cartItemselector} from '../../redux/cart.reducer/cart.selector'
+import {carttotal} from '../../redux/cart.reducer/cart.selector'
 
 import Cartitem from '../cartitems/cart.items.components'
 
@@ -23,20 +25,25 @@ const Styledcart = styled.div`
   
 `;
 
-const Cartdropdown = ({display,item}) => {
-  
+const Cartdropdown = ({display,item,total}) => {
+    
   return (
+      
     <Styledcart display={`${display}`}>
-        <h3>Shopppng Cart</h3><ol>
-     { item.map(value=><li><Cartitem item={value}/></li>)}
+        <h4>Shopppng Cart</h4><ol>
+     { item.map(value=><li key={value.title}><Cartitem item={value}/></li>)}
      </ol>
+  <p>total: ${total}</p>
     </Styledcart>
   );
 };
 
 const mapStateToProps=(state)=>({
 display:state.cart.display,
-item:state.cart.items
+item:cartItemselector(state),
+total:carttotal(state)
 })
+
+
 
 export default  connect(mapStateToProps)(Cartdropdown);

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {toggleCart} from '../../redux/cart.reducer/cart.actions'
+import {carttotal} from '../../redux/cart.reducer/cart.selector'
 
 const Carticon = ({toggleitem,cartTotal,totalPrice}) => {
 
@@ -18,7 +19,7 @@ toggleitem()
 
  const mapStateToProps=state=>({
      cartTotal:state.cart.items.reduce(((a,b)=>a+b.quantity),0),
-     totalPrice:state.cart.items.reduce((a,b)=>a+(b.quantity*b.price),0)
+     totalPrice:carttotal(state)
  })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Carticon);
